@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+" xmlns:aop="http://www.springframework.org/schema/aop">
+    
+    <bean id="world1" class="com.AtoSSyntel.HelloWorld">
+        <property name="greetings" value="Good Morning.Welcome to Spring Framework" />
+    </bean>
+    
+    <bean id="project1" class="com.AtoSSyntel.Project">
+        <property name="projectId" value="111753" />
+        <property name="projectName" value="Global Travel Cards" />
+    </bean>
+    
+    <bean id="project2" class="com.AtoSSyntel.Project" scope="prototype">
+       <constructor-arg index="0" value="222123" />
+       <constructor-arg index="1" value="Card Defaulters" />
+       <constructor-arg index="2" ref="emp2" />
+    </bean>
+    
+    <bean id="project3" class="com.AtoSSyntel.Project">
+        <property name="projectId" value="100753" />
+        <property name="projectName" value="Fraud Detection" />
+        <property name="projectManager" ref="emp2" />
+        <property name="skills">
+           <list>
+               <value>Java</value>
+               <value>Spring</value>
+               <value>ReactJS</value>
+           </list>
+       </property>
+       <property name="locations">
+           <map>
+               <entry key="baseLocation" value-ref="address1" />
+               <entry key="devLocation" value-ref="address2" />
+           </map>
+       </property>
+    </bean>
+    
+    <bean id="emp2" class="com.AtoSSyntel.Employee" >
+        <property name="employeeId" value="PA123212" />
+        <property name="employeeName" value="Princy Allen" />
+        <property name="jobDescription" value="Test Manager" />
+    </bean>
+    
+    <bean id="emp1" class="com.AtoSSyntel.Employee" scope="prototype">
+        <constructor-arg index="0" value="AB10283" />
+        <constructor-arg index="1" value="Allen Bartho" />
+        <constructor-arg index="2" value="12000" />
+        <constructor-arg index="3" value="Programmer Analyst" />
+        <constructor-arg index="4" ref="address1" />
+    </bean>
+    
+    <bean id="address1" class="com.AtoSSyntel.Address">
+        <property name="street" value="Lyon Court" />
+        <property name="city" value="Toronto" />
+        <property name="state" value="Ontario" />
+        <property name="country" value="Canada" />
+         <property name="zipCode" value="ON4643" />
+    </bean>
+    
+     <bean id="address2" class="com.AtoSSyntel.Address">
+        <property name="street" value="Rose Lane" />
+        <property name="city" value="Phoenix" />
+        <property name="state" value="Arizona" />
+        <property name="country" value="USA" />
+         <property name="zipCode" value="80233" />
+    </bean>
+    
+    <bean id="myCollection" class="com.AtoSSyntel.MyCollection">
+      <constructor-arg index="0" >
+	  <list>
+	       <value>List Value A</value>
+	       <value>List Value B</value>
+	  </list>
+      </constructor-arg>
+      <constructor-arg index="1">
+        <set>
+            <value>Set Value A</value>
+            <value>Set Value B</value>
+        </set>
+      </constructor-arg>
+      <constructor-arg index="2">
+	 <map>
+            <entry key="0" value="Map Value A"/>           
+            <entry key="1" value="Map Value B"/>
+         </map>
+      </constructor-arg>
+      <constructor-arg index="3">
+	 <props>
+	       <prop key="propKeyA">Prop Value A</prop>
+	       <prop key="propKeyB">Prop Value B</prop>
+	 </props>
+      </constructor-arg>      
+      <constructor-arg index="4">
+      	<list>
+      		<ref bean="book1"/>
+      		<ref bean="book2"/>
+      	</list>
+      </constructor-arg>
+    </bean>
+    <bean id="book1" class="com.AtoSSyntel.Book">
+    	<property name="bookId" value="100"/>
+    	<property name="bookName" value="Godan"/>
+    </bean>
+    <bean id="book2" class="com.AtoSSyntel.Book">
+    	<property name="bookId" value="200"/>
+    	<property name="bookName" value="Nirmla"/>
+    </bean>  
+    
+     <!-- Initialization for data source -->
+   <bean id="dataSource" 
+      class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name = "driverClassName" value = "org.apache.derby.jdbc.ClientDriver"/>
+      <property name = "url" value = "jdbc:derby://localhost:1527/sample"/>
+      <property name = "username" value = "app"/>
+      <property name = "password" value = "app"/>
+   </bean>
+
+   <!-- Definition for studentJDBCTemplate bean -->
+   <bean id = "studentService" 
+      class = "com.AtoSSyntel.StudentService">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+   
+   <!-- Autowring Examples -->
+   <!-- byType example -->
+    <bean id="employee" class="com.AtoSSyntel.SpringWiring.Employee" autowire="byType"/>
+ 
+    <bean id="Address" class="com.AtoSSyntel.SpringWiring.Address" >
+        <property name="street" value="112/223,SantaVila"/>
+        <property name="city" value="Nebraska"/>
+    </bean>
+    
+    <bean id="employee1" class="com.AtoSSyntel.SpringWiring.Employee1" autowire="constructor"/>
+ 
+    <bean id="Address1" class="com.AtoSSyntel.SpringWiring.Address1" >
+        <property name="street" value="112/223,SantaVila"/>
+        <property name="city" value="Nebraska"/>
+    </bean>
+</beans>
